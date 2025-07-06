@@ -1,10 +1,10 @@
-# 🚗 ParkSense: Dynamic Pricing for Urban Parking Lots
+# 🚗 SmartPark: Real-Time Dynamic Pricing for Urban Parking Lots
 
 ## 📄 Overview
 
-**ParkSense** is a real-time dynamic pricing engine for urban parking lots, developed as a capstone project for **Summer Analytics 2025 by IIT Guwahati**. The project addresses the challenges of static pricing—such as overutilization and underutilization—by dynamically adjusting parking prices based on real-time factors like occupancy, traffic, queue length, vehicle type, and special days.
+**SmartPark** is a real-time dynamic pricing engine for urban parking lots, developed as a capstone project for **Summer Analytics 2025 by IIT Guwahati**. The project addresses the challenges of static pricing—such as overutilization and underutilization—by dynamically adjusting parking prices based on real-time factors like occupancy, traffic, queue length, vehicle type, and special days.
 
-Using a data-driven pipeline powered by **Pathway** and visualized via **Bokeh** and **Panel**, ParkSense implements and compares multiple pricing models to ensure efficient space utilization and fair dynamic pricing.
+Using a data-driven pipeline powered by **Pathway** and visualized via **Bokeh** and **Panel**, SmartPark implements and compares multiple pricing models to ensure efficient space utilization and fair dynamic pricing.
 
 ---
 
@@ -44,7 +44,7 @@ graph TD
     F --> F2[Model 2: Demand-Based];
     F --> F3[Model 3: Competitive];
     F1 & F2 & F3 --> G[Combined Price Table];
-    G --> H[Visualization: Bokeh + Panel];
+    G --> H[Real-Time Visualization: Bokeh + Panel];
     H --> I[Interactive Dashboard];
 ```
 
@@ -81,9 +81,8 @@ graph TD
 - Incorporates occupancy, queue length, traffic, vehicle type, and special days.
 - Final price: `price = BASE_PRICE * (1 + λ * normalized_demand)`
 
-#### ⚠️ Model 3: Competitive Model *(Optional / Simplified)*
+#### ✅ Model 3: Competitive Model *(Optional / Simplified)*
 - Adjusts price based on competition (e.g., neighbor lot prices).
-- Not included in final version due to implementation complexity.
 
 ---
 
@@ -101,11 +100,9 @@ graph TD
 
 | File | Description |
 |------|-------------|
-| `ParkSense.ipynb` | Main notebook with preprocessing, models, and visualization |
+| `SmartPark-JP.ipynb` | Main notebook with preprocessing, models, and visualization |
 | `dataset.csv` | Original dataset used for training |
 | `parking_data_stream.csv` | Preprocessed dataset used for streaming |
-| `baseline_linear_model_output.csv` | Output from Model 1 |
-| `model2_demand_pricing_output.csv` | Output from Model 2 |
 | `README.md` | Documentation for project |
 | `Project_Report.pdf` *(optional)* | Detailed explanation of models and assumptions |
 
