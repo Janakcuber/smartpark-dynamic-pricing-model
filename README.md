@@ -1,78 +1,119 @@
-ParkSense: Dynamic Pricing for Urban Parking
-📄 Project Overview
-ParkSense is an intelligent, data-driven dynamic pricing system designed for urban parking lots. This capstone project, developed as part of the Summer Analytics 2025 program by IIT Guwahati, addresses the inefficiencies of static parking prices (like overcrowding or underutilization) by dynamically adjusting parking rates in real-time. The system processes streaming data from multiple parking spaces, taking into account various parameters including occupancy, queue length, traffic conditions, special events, and vehicle types. It implements three progressively complex pricing models, culminating in a competitive pricing strategy, and visualizes real-time price fluctuations using interactive dashboards.
+# 🚗 ParkSense: Dynamic Pricing for Urban Parking Lots
 
-🎯 Key Objectives
-Develop a robust dynamic pricing engine for multiple urban parking spaces.
-Implement pricing models from scratch using fundamental data science libraries.
-Utilize a real-time data streaming framework for continuous price updates.
-Provide interactive visualizations to demonstrate pricing behavior and justification.
-🛠️ Tech Stack
-This project leverages a powerful combination of Python libraries and tools for data processing, modeling, and visualization:
+## 📄 Overview
 
-Python: The core programming language.
-NumPy: Fundamental package for numerical computing, used for efficient array operations and linear algebra (e.g., Normal Equation for linear regression).
-Pandas: Essential for data manipulation, cleaning, and analysis of historical parking data.
-Pathway: A high-performance Python framework for building real-time data streaming applications. Used for ingesting, processing, and transforming data streams.
-Bokeh: An interactive visualization library for creating dynamic and real-time plots that render in web browsers. Used for visualizing live price updates across parking lots.
-Panel: A library for creating custom interactive dashboards and web applications, seamlessly integrating with Bokeh plots to present the real-time insights.
-Google Colab: The development environment used for writing and executing the Python code.
-📐 Architecture Diagram
-The following diagram illustrates the high-level architecture and data flow of the ParkSense system:
+**ParkSense** is a real-time dynamic pricing engine for urban parking lots, developed as a capstone project for **Summer Analytics 2025 by IIT Guwahati**. The project addresses the challenges of static pricing—such as overutilization and underutilization—by dynamically adjusting parking prices based on real-time factors like occupancy, traffic, queue length, vehicle type, and special days.
 
+Using a data-driven pipeline powered by **Pathway** and visualized via **Bokeh** and **Panel**, ParkSense implements and compares multiple pricing models to ensure efficient space utilization and fair dynamic pricing.
+
+---
+
+## 🎯 Objectives
+
+- Build a dynamic pricing engine to adjust rates for multiple parking spaces in real-time.
+- Implement models from scratch using core data science libraries like NumPy and Pandas.
+- Use a real-time data streaming framework (**Pathway**) to simulate and process live data.
+- Provide real-time interactive dashboards using **Bokeh** and **Panel** to visualize pricing behavior.
+
+---
+
+## 🛠️ Tech Stack
+
+| Tool / Library    | Purpose |
+|-------------------|---------|
+| **Python**        | Programming language |
+| **NumPy**         | Numerical computations, linear regression |
+| **Pandas**        | Data manipulation & preprocessing |
+| **Pathway**       | Real-time data stream processing |
+| **Bokeh**         | Real-time interactive visualizations |
+| **Panel**         | Interactive dashboard layout |
+| **Google Colab**  | Development environment |
+
+---
+
+## 📊 Architecture Diagram (Mermaid)
+
+```mermaid
 graph TD
-    A[Historical Dataset - dataset.csv] --> B(Data Preprocessing - Pandas/NumPy);
-    B --> C(Simulated Data Stream - parking_data_stream.csv);
-    C --> D[Pathway Data Ingestion - pw.demo.replay_csv];
-    D --> E{Pathway Real-time Processing};
-    E -- Current Data (pw.this) --> F[Pricing Models:];
-    F --> F1(Model 1: Baseline Linear);
-    F --> F2(Model 2: Demand-Based - Learned Coefficients);
-    F --> F3(Model 3: Competitive - Simplified);
-    E -- All Parking Data --> F3;
-    F1 & F2 & F3 --> G(Combined Prices Stream);
-    G --> H[Real-time Visualization - Bokeh/Panel];
-    H --> I[Interactive Dashboard in Browser];
-🚀 Project Architecture and Workflow
-The ParkSense system operates as a real-time data pipeline, designed to continuously calculate and update parking prices.
+    A[Raw Data: dataset.csv] --> B[Data Preprocessing (Pandas/NumPy)];
+    B --> C[Simulated Data Stream (parking_data_stream.csv)];
+    C --> D[Real-time Ingestion: Pathway];
+    D --> E[Streaming Processing];
+    E --> F[Pricing Models];
+    F --> F1[Model 1: Linear];
+    F --> F2[Model 2: Demand-Based];
+    F --> F3[Model 3: Competitive];
+    F1 & F2 & F3 --> G[Combined Price Table];
+    G --> H[Visualization: Bokeh + Panel];
+    H --> I[Interactive Dashboard];
+```
 
-Data Ingestion and Preprocessing:
+---
 
-The project begins with a dataset.csv file containing historical parking data (occupancy, capacity, traffic, special days, vehicle types, etc.).
-This raw data is first loaded and preprocessed using Pandas and NumPy. This involves:
-Combining date and time columns into a single Timestamp.
-Sorting data chronologically.
-Encoding categorical features (like VehicleType and TrafficConditionNearby) into numerical representations.
-Normalizing numerical features to a consistent scale (0-1) to ensure fair contribution in models.
-Defining a Demand_Proxy from existing features to serve as the target variable for model training.
-Model Training (Offline):
+## 🚀 Workflow Breakdown
 
-Before real-time processing, the coefficients for Model 2 (Demand-Based Price Function) are determined.
-A Linear Regression model is implemented from scratch using NumPy's Normal Equation method. This model is trained on the preprocessed historical data to learn the impact of factors like Occupancy Rate, Queue Length, Traffic Condition, Special Day, and Vehicle Type on the Demand_Proxy. The learned coefficients (alpha_occ, beta_queue, gamma_traffic, delta_special, epsilon_vehicle) are then used by the real-time pricing engine.
-Pathway Real-time Data Stream:
+### 1. Data Ingestion & Preprocessing
+- Start with `dataset.csv` containing historical parking lot data.
+- Use Pandas to:
+  - Combine date and time into a single `timestamp`.
+  - Normalize features.
+  - Encode categorical variables.
+- Save the processed dataset as `parking_data_stream.csv`.
 
-The preprocessed historical data is saved into a parking_data_stream.csv.
-Pathway is then used to simulate a real-time data stream from this CSV file using pw.demo.replay_csv. This function replays the data at a controlled rate, mimicking a live data feed.
-A Pathway Schema is defined to ensure the incoming data is correctly structured and typed.
-Dynamic Pricing Engine (Pathway Pipeline):
+### 2. Model Training (Offline)
+- Build a **linear regression model** from scratch using **NumPy’s Normal Equation**.
+- Train it on a demand proxy based on historical features.
+- Extract coefficients (e.g., for occupancy, traffic, queue length) to be reused in Model 2.
 
-As data flows through the Pathway pipeline, each incoming record (representing the current state of a parking lot) is passed through three distinct pricing models:
-Model 1 (Baseline Linear Model): A simple model where price adjusts linearly with occupancy rate based on a fixed alpha parameter.
-Model 2 (Demand-Based Price Function): Calculates a demand score using the learned coefficients from the offline training step. This demand score is then normalized and used to dynamically adjust the BASE_PRICE.
-Model 3 (Competitive Pricing Model): Builds upon Model 2's price. It includes a simplified logic to adjust prices based on the current lot's occupancy and a hypothetical average competitor price. (Note: A full implementation would involve real-time competitive price fetching via Pathway joins).
-All pricing models ensure that the final price remains within predefined minimum and maximum bounds to prevent erratic fluctuations.
-The results from all three models are combined into a single combined_prices Pathway table.
-Real-time Visualization:
+### 3. Real-time Streaming with Pathway
+- Simulate a live stream using `pw.demo.replay_csv()` or `pw.io.csv.read()`.
+- Define a schema using `pw.Schema` for typed ingestion.
+- Set streaming rate to mimic real-time data ingestion.
 
-The combined_prices stream is connected to Bokeh for interactive, real-time visualizations.
-For each unique parking spot, a dedicated Bokeh plot is generated, displaying the price trends from all three models over time.
-Panel is used to arrange and serve these Bokeh plots as an interactive dashboard, allowing users to observe the dynamic pricing behavior as the simulated data streams in.
-Pipeline Execution:
+### 4. Dynamic Pricing Engine
 
-The entire Pathway pipeline is executed using pw.run(), which continuously processes the simulated data stream and updates the Bokeh/Panel dashboard in real-time.
-📂 Repository Contents
-ParkSense.ipynb: The main Google Colab notebook containing all the Python code for data preprocessing, model training, Pathway pipeline definition, and Bokeh/Panel visualizations.
-dataset.csv: The raw historical parking data used for the project.
-parking_data_stream.csv: The preprocessed CSV file used by Pathway for simulating the real-time data stream.
-README.md
-Project_Report.pdf: A detailed report explaining the project, models, assumptions, and results.
+#### ✅ Model 1: Baseline Linear Model
+- Simple pricing based on occupancy ratio.
+- Formula: `price = 10 + α * (occupancy / capacity)`
+
+#### ✅ Model 2: Demand-Based Model
+- Uses learned coefficients to calculate a demand score.
+- Incorporates occupancy, queue length, traffic, vehicle type, and special days.
+- Final price: `price = BASE_PRICE * (1 + λ * normalized_demand)`
+
+#### ⚠️ Model 3: Competitive Model *(Optional / Simplified)*
+- Adjusts price based on competition (e.g., neighbor lot prices).
+- Not included in final version due to implementation complexity.
+
+---
+
+## 📊 Real-Time Visualization
+
+- Use **Bokeh** to plot real-time price fluctuations per parking lot.
+- Plots include:
+  - Timestamps vs Prices for each model
+  - Line + circle markers for interaction
+- Organize plots into an interactive grid using **Panel**.
+
+---
+
+## 🗂️ Repository Contents
+
+| File | Description |
+|------|-------------|
+| `ParkSense.ipynb` | Main notebook with preprocessing, models, and visualization |
+| `dataset.csv` | Original dataset used for training |
+| `parking_data_stream.csv` | Preprocessed dataset used for streaming |
+| `baseline_linear_model_output.csv` | Output from Model 1 |
+| `model2_demand_pricing_output.csv` | Output from Model 2 |
+| `README.md` | Documentation for project |
+| `Project_Report.pdf` *(optional)* | Detailed explanation of models and assumptions |
+
+---
+
+## 📈 Key Takeaways
+
+- Pathway enables real-time streaming and transformation of structured data.
+- Dynamic pricing improves parking lot efficiency compared to static models.
+- Visualization with Bokeh provides clear insight into model behavior and trends.
+- The system is modular, scalable, and ready for real-world parking management systems.
