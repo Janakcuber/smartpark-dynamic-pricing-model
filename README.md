@@ -1,6 +1,6 @@
 # 🚗 SmartPark: Real-Time Dynamic Pricing for Urban Parking Lots
 
-## 📄 Overview
+## Overview
 
 **SmartPark** is a real-time dynamic pricing engine for urban parking lots, developed as a capstone project for **Summer Analytics 2025 by IIT Guwahati**. The project addresses the challenges of static pricing—such as overutilization and underutilization—by dynamically adjusting parking prices based on real-time factors like occupancy, traffic, queue length, vehicle type, and special days.
 
@@ -8,7 +8,7 @@ Using a data-driven pipeline powered by **Pathway** and visualized via **Bokeh**
 
 ---
 
-## 🎯 Objectives
+## Objectives
 
 - Build a dynamic pricing engine to adjust rates for multiple parking spaces in real-time.
 - Implement models from scratch using core data science libraries like NumPy and Pandas.
@@ -17,7 +17,7 @@ Using a data-driven pipeline powered by **Pathway** and visualized via **Bokeh**
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Tool / Library    | Purpose |
 |-------------------|---------|
@@ -31,7 +31,7 @@ Using a data-driven pipeline powered by **Pathway** and visualized via **Bokeh**
 
 ---
 
-## 📊 Architecture Diagram (Mermaid)
+## Architecture Diagram (Mermaid)
 
 ```mermaid
 graph TD
@@ -51,7 +51,7 @@ graph TD
 
 ---
 
-## 🚀 Workflow Breakdown
+## Workflow Breakdown
 
 ### 1. Data Ingestion & Preprocessing
 - Start with `dataset.csv` containing historical parking lot data.
@@ -73,21 +73,21 @@ graph TD
 
 ### 4. Dynamic Pricing Engine
 
-#### ✅ Model 1: Baseline Linear Model
+#### Model 1: Baseline Linear Model
 - Simple pricing based on occupancy ratio.
 - Formula: `price = 10 + α * (occupancy / capacity)`
 
-#### ✅ Model 2: Demand-Based Model
+#### Model 2: Demand-Based Model
 - Uses learned coefficients to calculate a demand score.
 - Incorporates occupancy, queue length, traffic, vehicle type, and special days.
 - Final price: `price = BASE_PRICE * (1 + λ * normalized_demand)`
 
-#### ✅ Model 3: Competitive Model *(Optional / Simplified)*
+#### Model 3: Competitive Model *(Optional / Simplified)*
 - Adjusts price based on competition (e.g., neighbor lot prices).
 
 ---
 
-## 📊 Real-Time Visualization
+## Real-Time Visualization
 
 - Use **Bokeh** to plot real-time price fluctuations per parking lot.
 - Plots include:
@@ -97,7 +97,7 @@ graph TD
 
 ---
 
-## 🗂️ Repository Contents
+## Repository Contents
 
 | File | Description |
 |------|-------------|
@@ -109,7 +109,7 @@ graph TD
 
 ---
 Additional Content that I have added. How this model helps in solving real-life problems.
-## 📈 Key Takeaways
+## Key Takeaways
 
 - Pathway enables real-time streaming and transformation of structured data.
 - Dynamic pricing improves parking lot efficiency compared to static models.
